@@ -1,0 +1,22 @@
+---
+import type { GetStaticPaths } from "astro";
+import { getLatestLaunches, getLaunchBy } from "../../services/SpaceX"
+import Layout from "../../layouts/Layout.astro";
+
+export const prerender = false
+
+const { id } = Astro.params
+
+let launch
+if (id) {
+    launch = await getLaunchBy({ id })
+}
+---
+
+<Layout title=`Lanzamiento ${id}`>
+    <article class="flex justify-center items-center gap-y-4 flex-col">
+        <img class="w-70 h-auto" src={launch?.links?.patch.small} alt={launch?.name}>
+        <h2 class="text-5xl text-white font-bold p-10">Launch #{launch?.flight_number}</h2>
+        <p class="text-md">{launch?.details}</p>
+    </article>
+</Layout>

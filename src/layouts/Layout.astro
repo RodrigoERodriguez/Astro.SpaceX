@@ -1,0 +1,45 @@
+---
+import Header from '../components/Header.astro';
+import { ViewTransitions } from 'astro:transitions';
+
+interface Props { //Tema de TS.
+	title: string;
+}
+
+//Para recuperar el dato y leerlo.
+//Astro es una variable global que funciona en todos los .Astro.
+const { title } = Astro.props;
+---
+
+<!-- Desde aca se encuentra el HTML que envuelve. -->
+<!-- Todo lo que quiero que se repita se tiene que cargar aca -->
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="description" content="Astro description" />
+		<meta name="viewport" content="width=device-width" />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<meta name="generator" content={Astro.generator} />
+		<title>{title}</title>
+		<ViewTransitions/>
+	</head>
+	<body class="bg-gray-900 min-h-screen pb-32">
+		<Header />
+		<main class="max-w-5xl px-4 m-auto">
+			<slot /> <!-- Funciona como el children -->
+		</main>
+	</body>
+</html>
+
+<!-- Estos estilos son globales, afecta en todos los sitios. -->
+<!-- Se puede usar directivas -->
+<!-- InLine = Dejar el estilo en el HTML para no procesarlo. -->
+<style is:global>
+	html {
+		font-family: system-ui, sans-serif;
+		background: #13151a;
+		background-size: 224px;
+		color-scheme: dark light;
+	}
+</style>
